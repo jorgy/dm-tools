@@ -1,0 +1,314 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AD902C2152CE961000FFCB3 /* DMClassDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD902C0152CE961000FFCB3 /* DMClassDocument.m */; };
+		0AD902C3152CE961000FFCB3 /* DMClassDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AD902C1152CE961000FFCB3 /* DMClassDocument.xib */; };
+		0AE1975A152BDB2D00FF7EA0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE19759152BDB2D00FF7EA0 /* Cocoa.framework */; };
+		0AE19764152BDB2D00FF7EA0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0AE19762152BDB2D00FF7EA0 /* InfoPlist.strings */; };
+		0AE19766152BDB2D00FF7EA0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE19765152BDB2D00FF7EA0 /* main.m */; };
+		0AE1976A152BDB2D00FF7EA0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0AE19768152BDB2D00FF7EA0 /* Credits.rtf */; };
+		0AE1976D152BDB2D00FF7EA0 /* DMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1976C152BDB2D00FF7EA0 /* DMAppDelegate.m */; };
+		0AE19770152BDB2D00FF7EA0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AE1976E152BDB2D00FF7EA0 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0AD902BF152CE961000FFCB3 /* DMClassDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMClassDocument.h; sourceTree = "<group>"; };
+		0AD902C0152CE961000FFCB3 /* DMClassDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMClassDocument.m; sourceTree = "<group>"; };
+		0AD902C1152CE961000FFCB3 /* DMClassDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMClassDocument.xib; sourceTree = "<group>"; };
+		0AE19755152BDB2D00FF7EA0 /* Dungeon Master Tools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dungeon Master Tools.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AE19759152BDB2D00FF7EA0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		0AE1975C152BDB2D00FF7EA0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		0AE1975D152BDB2D00FF7EA0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		0AE1975E152BDB2D00FF7EA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0AE19761152BDB2D00FF7EA0 /* Dungeon Master Tools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Dungeon Master Tools-Info.plist"; sourceTree = "<group>"; };
+		0AE19763152BDB2D00FF7EA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0AE19765152BDB2D00FF7EA0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0AE19767152BDB2D00FF7EA0 /* Dungeon Master Tools-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dungeon Master Tools-Prefix.pch"; sourceTree = "<group>"; };
+		0AE19769152BDB2D00FF7EA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		0AE1976B152BDB2D00FF7EA0 /* DMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DMAppDelegate.h; sourceTree = "<group>"; };
+		0AE1976C152BDB2D00FF7EA0 /* DMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DMAppDelegate.m; sourceTree = "<group>"; };
+		0AE1976F152BDB2D00FF7EA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0AE19752152BDB2D00FF7EA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AE1975A152BDB2D00FF7EA0 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0AD902BD152CE929000FFCB3 /* DMClass */ = {
+			isa = PBXGroup;
+			children = (
+				0AD902BF152CE961000FFCB3 /* DMClassDocument.h */,
+				0AD902C0152CE961000FFCB3 /* DMClassDocument.m */,
+				0AD902C1152CE961000FFCB3 /* DMClassDocument.xib */,
+			);
+			path = DMClass;
+			sourceTree = "<group>";
+		};
+		0AE1974A152BDB2D00FF7EA0 = {
+			isa = PBXGroup;
+			children = (
+				0AE1975F152BDB2D00FF7EA0 /* Dungeon Master Tools */,
+				0AE19758152BDB2D00FF7EA0 /* Frameworks */,
+				0AE19756152BDB2D00FF7EA0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0AE19756152BDB2D00FF7EA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0AE19755152BDB2D00FF7EA0 /* Dungeon Master Tools.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0AE19758152BDB2D00FF7EA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AE19759152BDB2D00FF7EA0 /* Cocoa.framework */,
+				0AE1975B152BDB2D00FF7EA0 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0AE1975B152BDB2D00FF7EA0 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AE1975C152BDB2D00FF7EA0 /* AppKit.framework */,
+				0AE1975D152BDB2D00FF7EA0 /* CoreData.framework */,
+				0AE1975E152BDB2D00FF7EA0 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		0AE1975F152BDB2D00FF7EA0 /* Dungeon Master Tools */ = {
+			isa = PBXGroup;
+			children = (
+				0AD902BD152CE929000FFCB3 /* DMClass */,
+				0AE1976B152BDB2D00FF7EA0 /* DMAppDelegate.h */,
+				0AE1976C152BDB2D00FF7EA0 /* DMAppDelegate.m */,
+				0AE1976E152BDB2D00FF7EA0 /* MainMenu.xib */,
+				0AE19760152BDB2D00FF7EA0 /* Supporting Files */,
+			);
+			path = "Dungeon Master Tools";
+			sourceTree = "<group>";
+		};
+		0AE19760152BDB2D00FF7EA0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0AE19761152BDB2D00FF7EA0 /* Dungeon Master Tools-Info.plist */,
+				0AE19762152BDB2D00FF7EA0 /* InfoPlist.strings */,
+				0AE19765152BDB2D00FF7EA0 /* main.m */,
+				0AE19767152BDB2D00FF7EA0 /* Dungeon Master Tools-Prefix.pch */,
+				0AE19768152BDB2D00FF7EA0 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0AE19754152BDB2D00FF7EA0 /* Dungeon Master Tools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AE19773152BDB2D00FF7EA0 /* Build configuration list for PBXNativeTarget "Dungeon Master Tools" */;
+			buildPhases = (
+				0AE19751152BDB2D00FF7EA0 /* Sources */,
+				0AE19752152BDB2D00FF7EA0 /* Frameworks */,
+				0AE19753152BDB2D00FF7EA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Dungeon Master Tools";
+			productName = "Dungeon Master Tools";
+			productReference = 0AE19755152BDB2D00FF7EA0 /* Dungeon Master Tools.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0AE1974C152BDB2D00FF7EA0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DM;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Kevin Jorgensen";
+			};
+			buildConfigurationList = 0AE1974F152BDB2D00FF7EA0 /* Build configuration list for PBXProject "Dungeon Master Tools" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0AE1974A152BDB2D00FF7EA0;
+			productRefGroup = 0AE19756152BDB2D00FF7EA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0AE19754152BDB2D00FF7EA0 /* Dungeon Master Tools */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0AE19753152BDB2D00FF7EA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AE19764152BDB2D00FF7EA0 /* InfoPlist.strings in Resources */,
+				0AE1976A152BDB2D00FF7EA0 /* Credits.rtf in Resources */,
+				0AE19770152BDB2D00FF7EA0 /* MainMenu.xib in Resources */,
+				0AD902C3152CE961000FFCB3 /* DMClassDocument.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0AE19751152BDB2D00FF7EA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AE19766152BDB2D00FF7EA0 /* main.m in Sources */,
+				0AE1976D152BDB2D00FF7EA0 /* DMAppDelegate.m in Sources */,
+				0AD902C2152CE961000FFCB3 /* DMClassDocument.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0AE19762152BDB2D00FF7EA0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0AE19763152BDB2D00FF7EA0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0AE19768152BDB2D00FF7EA0 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0AE19769152BDB2D00FF7EA0 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		0AE1976E152BDB2D00FF7EA0 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0AE1976F152BDB2D00FF7EA0 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0AE19771152BDB2D00FF7EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0AE19772152BDB2D00FF7EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0AE19774152BDB2D00FF7EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Dungeon Master Tools/Dungeon Master Tools-Prefix.pch";
+				INFOPLIST_FILE = "Dungeon Master Tools/Dungeon Master Tools-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0AE19775152BDB2D00FF7EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Dungeon Master Tools/Dungeon Master Tools-Prefix.pch";
+				INFOPLIST_FILE = "Dungeon Master Tools/Dungeon Master Tools-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0AE1974F152BDB2D00FF7EA0 /* Build configuration list for PBXProject "Dungeon Master Tools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AE19771152BDB2D00FF7EA0 /* Debug */,
+				0AE19772152BDB2D00FF7EA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0AE19773152BDB2D00FF7EA0 /* Build configuration list for PBXNativeTarget "Dungeon Master Tools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AE19774152BDB2D00FF7EA0 /* Debug */,
+				0AE19775152BDB2D00FF7EA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0AE1974C152BDB2D00FF7EA0 /* Project object */;
+}
