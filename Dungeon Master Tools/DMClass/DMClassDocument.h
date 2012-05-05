@@ -11,11 +11,17 @@
 @interface DMClassDocument : NSDocument <NSTextFieldDelegate>
 {
     NSString *_name;
+    NSUInteger _hitDie;
+    NSUInteger _skillPoints;
     
     NSTextField *_nameLabel;
+    NSSegmentedControl *_hitDieSegment;
+    NSSegmentedControl *_skillPointsSegment;
 }
 
 @property (nonatomic, retain) IBOutlet NSTextField *nameLabel;
+@property (nonatomic, retain) IBOutlet NSSegmentedControl *hitDieSegment;
+@property (nonatomic, retain) IBOutlet NSSegmentedControl *skillPointsSegment;
 
 - (IBAction) segmentedControlChanged: (NSSegmentedControl *) sender;
 

@@ -18,6 +18,8 @@
 @implementation DMClassDocument
 
 @synthesize nameLabel = _nameLabel;
+@synthesize hitDieSegment = _hitDieSegment;
+@synthesize skillPointsSegment = _skillPointsSegment;
 
 
 #pragma mark - Memory lifecycle
@@ -29,6 +31,8 @@
     if (self)
     {
         _name = [@"" retain];
+        _hitDie = 4;
+        _skillPoints = 2;
     }
     
     return self;
@@ -59,18 +63,39 @@
 }
 
 
+- (void) setHitDie: (NSInteger) dieSize
+{
+    [[[self undoManager] prepareWithInvocationTarget: self] setHitDie: _hitDie];
+    
+    _hitDie = dieSize;
+    
+    [_hitDieSegment setSelectedSegment: (_hitDie - 4) / 2];
+}
+
+
+- (void) setSkillPoints: (NSInteger) skillPoints
+{
+    [[[self undoManager] prepareWithInvocationTarget: self] setSkillPoints: _skillPoints];
+    
+    _skillPoints = skillPoints;
+    
+    [_skillPointsSegment setSelectedSegment: (_skillPoints - 2) / 2];
+}
+
+
 #pragma mark - 
 
 - (void) segmentedControlChanged: (NSSegmentedControl *) sender
 {
+    NSInteger index = [sender selectedSegment];
     switch ([sender tag])
     {
         case kDMHitDieTag:
-            NSLog(@"Hit Die");
+            [self setHitDie: (index * 2) + 4];
             break;
             
         case kDMSkillPointsTag:
-            NSLog(@"Skill Points");
+            [self setSkillPoints: (index * 2) + 2];
             break;
             
         case kDMClassTypeTag:
@@ -107,6 +132,8 @@
     [_nameLabel setDelegate: self];
     
     [_nameLabel setStringValue: _name];
+    [_hitDieSegment setSelectedSegment: (_hitDie - 4) / 2];
+    [_skillPointsSegment setSelectedSegment: (_skillPoints - 2) / 2];
 }
 
 
@@ -116,7 +143,11 @@
     NSMutableData *data = [[NSMutableData alloc] init];
     
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: data];
+    
     [archiver encodeObject: _name forKey: @"classname"];
+    [archiver encodeInteger: _hitDie forKey: @"hitdie"];
+    [archiver encodeInteger: _skillPoints forKey: @"skillpoints"];
+    
     [archiver finishEncoding];
     [archiver release];
     
@@ -129,14 +160,14 @@
     // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData: data];
     
-    NSString *name = [[unarchiver decodeObjectForKey: @"classname"] retain];
+    [_name release];
+    _name = [[unarchiver decodeObjectForKey: @"classname"] retain];
+    
+    _hitDie = [unarchiver decodeIntegerForKey: @"hitdie"];
+    _skillPoints = [unarchiver decodeIntegerForKey: @"skillpoints"];
     
     [unarchiver finishDecoding];
     [unarchiver release];
-    
-    NSLog(@"%@", name);
-    
-    [name release];
     
     return YES;
 }
