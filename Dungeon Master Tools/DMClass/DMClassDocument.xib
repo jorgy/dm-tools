@@ -1167,7 +1167,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="909242935"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{691, 372}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -1186,14 +1186,6 @@
 						<reference key="destination" ref="275939982"/>
 					</object>
 					<int key="connectionID">18</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">nameLabel</string>
-						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="402344640"/>
-					</object>
-					<int key="connectionID">100300</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1229,11 +1221,43 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">casterTypeLabel</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="380422131"/>
+					</object>
+					<int key="connectionID">100817</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">casterTypeSegment</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="1033332299"/>
+					</object>
+					<int key="connectionID">100818</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">classTypeSegment</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="719930643"/>
+					</object>
+					<int key="connectionID">100819</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">hitDieSegment</string>
 						<reference key="source" ref="512844837"/>
 						<reference key="destination" ref="785331904"/>
 					</object>
-					<int key="connectionID">100812</int>
+					<int key="connectionID">100820</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nameLabel</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="402344640"/>
+					</object>
+					<int key="connectionID">100821</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1241,7 +1265,7 @@
 						<reference key="source" ref="512844837"/>
 						<reference key="destination" ref="495892151"/>
 					</object>
-					<int key="connectionID">100813</int>
+					<int key="connectionID">100822</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3926,7 +3950,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100813</int>
+			<int key="maxID">100822</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3949,12 +3973,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>casterTypeLabel</string>
+							<string>casterTypeSegment</string>
+							<string>classTypeSegment</string>
 							<string>hitDieSegment</string>
 							<string>nameLabel</string>
 							<string>skillPointsSegment</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
+							<string>NSSegmentedControl</string>
+							<string>NSSegmentedControl</string>
 							<string>NSSegmentedControl</string>
 							<string>NSTextField</string>
 							<string>NSSegmentedControl</string>
@@ -3964,12 +3994,27 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>casterTypeLabel</string>
+							<string>casterTypeSegment</string>
+							<string>classTypeSegment</string>
 							<string>hitDieSegment</string>
 							<string>nameLabel</string>
 							<string>skillPointsSegment</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">casterTypeLabel</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">casterTypeSegment</string>
+								<string key="candidateClassName">NSSegmentedControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">classTypeSegment</string>
+								<string key="candidateClassName">NSSegmentedControl</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">hitDieSegment</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
