@@ -7,7 +7,7 @@
 	<string>Bluff</string>
 	<string>Climb</string>
 	<string>Concentration</string>
-	<string>Craft</string>
+	<string>Craft [Type]</string>
 	<string>Decipher Script</string>
 	<string>Diplomacy</string>
 	<string>Disable Device</string>
@@ -33,8 +33,8 @@
 	<string>Listen</string>
 	<string>Move Silently</string>
 	<string>Open Lock</string>
-	<string>Perform</string>
-	<string>Profession</string>
+	<string>Perform [Type]</string>
+	<string>Profession [Type]</string>
 	<string>Ride</string>
 	<string>Search</string>
 	<string>Sense Motive</string>
