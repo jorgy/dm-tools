@@ -1,5 +1,7 @@
 # Xcode user data #
 ###################
+*.pbxuser
+!default.pbxuser
 xcuserdata
 
 
