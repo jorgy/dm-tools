@@ -15,6 +15,9 @@
 #define kDMClassTypeTag   (1002)
 #define kDMCasterTypeTag  (1003)
 #define kDMBaseAttackTag  (2001)
+#define kDMFortSaveTag    (2002)
+#define kDMReflexSaveTag  (2003)
+#define kDMWillSaveTag    (2004)
 
 /* Segmented control labels */
 #define kDMCasterLabel      @"Caster"
@@ -33,6 +36,9 @@
 #define kDMClassSkillsKey @"ClassSkills"
 #define kDMLevelCapKey    @"LevelCap"
 #define kDMBaseAttackKey  @"BaseAttack"
+#define kDMFortitudeKey   @"FortitudeSave"
+#define kDMReflexKey      @"ReflexSave"
+#define kDMWillKey        @"WillSave"
 
 
 
@@ -42,6 +48,9 @@
     NSArray *_skillNames;
     
     /* UI elements */
+    NSTabView *_tabView;
+    NSTabViewItem *_spellsTab;
+    
     NSTextField *_nameLabel;
     NSSegmentedControl *_hitDieSegment;
     NSSegmentedControl *_skillPointsSegment;
@@ -53,6 +62,12 @@
     NSTableView *_levelUpChart;
     NSSlider *_levelCapSlider;
     NSSegmentedControl *_baseAttackSegment;
+    NSSegmentedControl *_fortitudeSegment;
+    NSSegmentedControl *_reflexSegment;
+    NSSegmentedControl *_willSegment;
+    
+    NSTableView *_spellsPerDayTable;
+    NSTableView *_spellsKnownTable;
 }
 
 @end
@@ -61,6 +76,8 @@
 
 @implementation DMClassDocument
 
+@synthesize tabView = _tabView;
+@synthesize spellsTab = _spellsTab;
 @synthesize nameLabel = _nameLabel;
 @synthesize hitDieSegment = _hitDieSegment;
 @synthesize skillPointsSegment = _skillPointsSegment;
@@ -71,6 +88,11 @@
 @synthesize levelUpChart = _levelUpChart;
 @synthesize levelCapSlider = _levelCapSlider;
 @synthesize baseAttackSegment = _baseAttackSegment;
+@synthesize fortitudeSegment = _fortitudeSegment;
+@synthesize reflexSegment = _reflexSegment;
+@synthesize willSegment = _willSegment;
+@synthesize spellsPerDayTable = _spellsPerDayTable;
+@synthesize spellsKnownTable = _spellsKnownTable;
 
 
 #pragma mark - Memory lifecycle
@@ -91,6 +113,9 @@
         
         _levelCap = 20;
         _attackProgression = DM_FAST;
+        _fortitudeProgression = DM_GOOD;
+        _reflexProgression = DM_GOOD;
+        _willProgression = DM_GOOD;
         
         NSBundle *mainBundle = [NSBundle mainBundle];
         NSString *skillsPlistPath = [mainBundle pathForResource: @"ClassSkills" ofType: @"plist"];
@@ -109,6 +134,9 @@
     [_selectedSkills release];
     [_skillNames release];
     
+    [_tabView release];
+    [_spellsTab release];
+    
     [_nameLabel release];
     [_hitDieSegment release];
     [_skillPointsSegment release];
@@ -118,6 +146,13 @@
     
     [_skillTable release];
     [_levelUpChart release];
+    [_baseAttackSegment release];
+    [_fortitudeSegment release];
+    [_reflexSegment release];
+    [_willSegment release];
+    
+    [_spellsPerDayTable release];
+    [_spellsKnownTable release];
     
     [super dealloc];
 }
@@ -174,11 +209,21 @@
     {
         [_casterTypeSegment setHidden: NO];
         [_casterTypeLabel setHidden: NO];
+        
+        if ([_tabView numberOfTabViewItems] < 3)
+        {
+            [_tabView addTabViewItem: _spellsTab];
+        }
     }
     else
     {
         [_casterTypeSegment setHidden: YES];
         [_casterTypeLabel setHidden: YES];
+        
+        if ([_tabView numberOfTabViewItems] > 2)
+        {
+            [_tabView removeTabViewItem: _spellsTab];
+        }
     }
 }
 
@@ -241,6 +286,39 @@
 }
 
 
+- (void) setFortitudeProgression: (DMSaveProgression) progression
+{
+    [[[self undoManager] prepareWithInvocationTarget: self] setFortitudeProgression: _fortitudeProgression];
+    
+    _fortitudeProgression = progression;
+
+    [_levelUpChart reloadData];
+    [_fortitudeSegment setSelectedSegment: _fortitudeProgression];
+}
+
+
+- (void) setReflexProgression: (DMSaveProgression) progression
+{
+    [[[self undoManager] prepareWithInvocationTarget: self] setReflexProgression: _reflexProgression];
+    
+    _reflexProgression = progression;
+    
+    [_levelUpChart reloadData];
+    [_reflexSegment setSelectedSegment: _reflexProgression];
+}
+
+
+- (void) setWillProgression: (DMSaveProgression) progression
+{
+    [[[self undoManager] prepareWithInvocationTarget: self] setWillProgression: _willProgression];
+    
+    _willProgression = progression;
+    
+    [_levelUpChart reloadData];
+    [_willSegment setSelectedSegment: _willProgression];
+}
+
+
 #pragma mark - Segmented control handler
 
 - (void) segmentedControlChanged: (NSSegmentedControl *) sender
@@ -267,6 +345,18 @@
         case kDMBaseAttackTag:
             [self setBaseAttackProgression: index];
             break;
+            
+        case kDMFortSaveTag:
+            [self setFortitudeProgression: index];
+            break;
+            
+        case kDMReflexSaveTag:
+            [self setReflexProgression: index];
+            break;
+            
+        case kDMWillSaveTag:
+            [self setWillProgression: index];
+            break;
     }
 }
 
@@ -276,6 +366,14 @@
 - (void) sliderChanged: (NSSlider *) sender
 {
     [self setLevelCap: [sender integerValue]];
+}
+
+
+#pragma mark - Spell table button handlers
+
+- (void) spellsPerDayButtonTapped: (NSTableView *) sender
+{
+    
 }
 
 
@@ -294,6 +392,10 @@
     if (tableView == _skillTable)
         return [_skillNames count];
     else if (tableView == _levelUpChart)
+        return _levelCap;
+    else if (tableView == _spellsPerDayTable)
+        return _levelCap;
+    else if (tableView == _spellsKnownTable)
         return _levelCap;
     else
         return 0;
@@ -353,28 +455,64 @@
                     break;
             }
             
-            switch (attack)
+            NSString *attackString = [NSString stringWithFormat: @"+%d", attack];
+            attack -= 5;
+            while (attack > 0)
             {
-                case 0: case 1: case 2: case 3: case 4: case 5:
-                    return [NSString stringWithFormat: @"+%d", attack];
-
-                case 6: case 7: case 8: case 9: case 10:
-                    return [NSString stringWithFormat: @"+%d/+%d", attack, attack - 5];
-                    
-                case 11: case 12: case 13: case 14: case 15:
-                    return [NSString stringWithFormat: @"+%d/+%d/+%d", attack, attack - 5, attack - 10];
-                    
-                case 16: case 17: case 18: case 19: case 20:
-                    return [NSString stringWithFormat: @"+%d/+%d/+%d/+%d", attack, attack - 5, attack - 10, attack - 15];
-
-                default:
-                    return nil;
+                attackString = [attackString stringByAppendingFormat: @"/+%d", attack];
+                attack -= 5;
             }
+            
+            return attackString;
+        }
+        else if ([[tableColumn identifier] isEqualToString: @"fort"])
+        {
+            int fort;
+            if (_fortitudeProgression == DM_GOOD)
+                fort = ((row + 1) / 2) + 2;
+            else
+                fort = (row + 1) / 3;
+            
+            return [NSString stringWithFormat: @"+%d", fort];
+        }
+        else if ([[tableColumn identifier] isEqualToString: @"ref"])
+        {
+            int ref;
+            if (_reflexProgression == DM_GOOD)
+                ref = ((row + 1) / 2) + 2;
+            else
+                ref = (row + 1) / 3;
+            
+            return [NSString stringWithFormat: @"+%d", ref];
+        }
+        else if ([[tableColumn identifier] isEqualToString: @"will"])
+        {
+            int will;
+            if (_willProgression == DM_GOOD)
+                will = ((row + 1) / 2) + 2;
+            else
+                will = (row + 1) / 3;
+            
+            return [NSString stringWithFormat: @"+%d", will];
         }
         else
         {
             return nil;
         }
+    }
+    else if (tableView == _spellsPerDayTable)
+    {
+        if ([[tableColumn identifier] isEqualToString: @"level"])
+            return [NSNumber numberWithInt: row + 1];
+        
+        return @"-";
+    }
+    else if (tableView == _spellsKnownTable)
+    {
+        if ([[tableColumn identifier] isEqualToString: @"level"])
+            return [NSNumber numberWithInt: row + 1];
+        
+        return @"-";
     }
     else
     {
@@ -382,8 +520,6 @@
     }
 }
 
-
-#pragma mark - NSTableViewDelegate
 
 - (void) tableView: (NSTableView *) tableView setObjectValue: (id) object forTableColumn: (NSTableColumn *) tableColumn row: (NSInteger) row
 {
@@ -427,6 +563,8 @@
     {
         [_casterTypeSegment setHidden: YES];
         [_casterTypeLabel setHidden: YES];
+        
+        [_tabView removeTabViewItem: _spellsTab];
     }
     
     index = [[NSArray arrayWithObjects: kDMPreparedLabel, kDMSpontaneousLabel, kDMPrestigeLabel, nil] indexOfObject: _casterType];
@@ -434,12 +572,14 @@
     
     [_levelCapSlider setIntegerValue: _levelCap];
     [_baseAttackSegment setSelectedSegment: _attackProgression];
+    [_fortitudeSegment setSelectedSegment: _fortitudeProgression];
+    [_reflexSegment setSelectedSegment: _reflexProgression];
+    [_willSegment setSelectedSegment: _willProgression];
 }
 
 
 - (NSData *) dataOfType: (NSString *) typeName error: (NSError **) outError
 {
-    // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.    
     NSMutableData *data = [[NSMutableData alloc] init];
     
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: data];
@@ -466,6 +606,9 @@
     
     [archiver encodeInt: _levelCap forKey: kDMLevelCapKey];
     [archiver encodeInt: _attackProgression forKey: kDMBaseAttackKey];
+    [archiver encodeInt: _fortitudeProgression forKey: kDMFortitudeKey];
+    [archiver encodeInt: _reflexProgression forKey: kDMReflexKey];
+    [archiver encodeInt: _willProgression forKey: kDMWillKey];
     
     [archiver finishEncoding];
     [archiver release];
@@ -476,7 +619,6 @@
 
 - (BOOL) readFromData: (NSData *) data ofType: (NSString *) typeName error: (NSError **) outError
 {
-    // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData: data];
     
     [_name release];
@@ -501,6 +643,9 @@
     
     _levelCap = [unarchiver decodeIntForKey: kDMLevelCapKey];
     _attackProgression = [unarchiver decodeIntForKey: kDMBaseAttackKey];
+    _fortitudeProgression = [unarchiver decodeIntForKey: kDMFortitudeKey];
+    _reflexProgression = [unarchiver decodeIntForKey: kDMReflexKey];
+    _willProgression = [unarchiver decodeIntForKey: kDMWillKey];
     
     [unarchiver finishDecoding];
     [unarchiver release];

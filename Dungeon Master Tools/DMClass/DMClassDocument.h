@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 typedef enum { DM_FAST = 0, DM_MEDIUM = 1, DM_SLOW = 2 } DMBaseAttackProgession;
+typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 
 @interface DMClassDocument : NSDocument <NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -20,9 +21,15 @@ typedef enum { DM_FAST = 0, DM_MEDIUM = 1, DM_SLOW = 2 } DMBaseAttackProgession;
     
     NSInteger _levelCap;
     DMBaseAttackProgession _attackProgression;
+    DMSaveProgression _fortitudeProgression;
+    DMSaveProgression _reflexProgression;
+    DMSaveProgression _willProgression;
 }
 
 /* UI properties for IB */
+@property (nonatomic, retain) IBOutlet NSTabView *tabView;
+@property (nonatomic, retain) IBOutlet NSTabViewItem *spellsTab;
+
 @property (nonatomic, retain) IBOutlet NSTextField *nameLabel;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *hitDieSegment;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *skillPointsSegment;
@@ -34,6 +41,12 @@ typedef enum { DM_FAST = 0, DM_MEDIUM = 1, DM_SLOW = 2 } DMBaseAttackProgession;
 @property (nonatomic, retain) IBOutlet NSTableView *levelUpChart;
 @property (nonatomic, retain) IBOutlet NSSlider *levelCapSlider;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *baseAttackSegment;
+@property (nonatomic, retain) IBOutlet NSSegmentedControl *fortitudeSegment;
+@property (nonatomic, retain) IBOutlet NSSegmentedControl *reflexSegment;
+@property (nonatomic, retain) IBOutlet NSSegmentedControl *willSegment;
+
+@property (nonatomic, retain) IBOutlet NSTableView *spellsPerDayTable;
+@property (nonatomic, retain) IBOutlet NSTableView *spellsKnownTable;
 
 
 /** Segmented control callback */
@@ -41,5 +54,8 @@ typedef enum { DM_FAST = 0, DM_MEDIUM = 1, DM_SLOW = 2 } DMBaseAttackProgession;
 
 /** Slider callback */
 - (IBAction) sliderChanged: (NSSlider *) sender;
+
+/** Spell table button handlers */
+- (IBAction) spellsPerDayButtonTapped: (NSTableView *) sender;
 
 @end
