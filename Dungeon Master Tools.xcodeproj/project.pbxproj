@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A38B81F155744FD0038F8B7 /* ClassSkills.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A38B81E155744FD0038F8B7 /* ClassSkills.plist */; };
 		0AD902C2152CE961000FFCB3 /* DMClassDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD902C0152CE961000FFCB3 /* DMClassDocument.m */; };
 		0AD902C3152CE961000FFCB3 /* DMClassDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AD902C1152CE961000FFCB3 /* DMClassDocument.xib */; };
 		0AE1975A152BDB2D00FF7EA0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE19759152BDB2D00FF7EA0 /* Cocoa.framework */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A38B81E155744FD0038F8B7 /* ClassSkills.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ClassSkills.plist; sourceTree = "<group>"; };
 		0AD902BF152CE961000FFCB3 /* DMClassDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMClassDocument.h; sourceTree = "<group>"; };
 		0AD902C0152CE961000FFCB3 /* DMClassDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMClassDocument.m; sourceTree = "<group>"; };
 		0AD902C1152CE961000FFCB3 /* DMClassDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMClassDocument.xib; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				0AE19761152BDB2D00FF7EA0 /* Dungeon Master Tools-Info.plist */,
+				0A38B81E155744FD0038F8B7 /* ClassSkills.plist */,
 				0AE19762152BDB2D00FF7EA0 /* InfoPlist.strings */,
 				0AE19765152BDB2D00FF7EA0 /* main.m */,
 				0AE19767152BDB2D00FF7EA0 /* Dungeon Master Tools-Prefix.pch */,
@@ -174,6 +177,7 @@
 				0AE1976A152BDB2D00FF7EA0 /* Credits.rtf in Resources */,
 				0AE19770152BDB2D00FF7EA0 /* MainMenu.xib in Resources */,
 				0AD902C3152CE961000FFCB3 /* DMClassDocument.xib in Resources */,
+				0A38B81F155744FD0038F8B7 /* ClassSkills.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

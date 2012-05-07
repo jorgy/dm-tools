@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DMClassDocument : NSDocument <NSTextFieldDelegate>
+@interface DMClassDocument : NSDocument <NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate>
 {
     NSString *_name;
     NSUInteger _hitDie;

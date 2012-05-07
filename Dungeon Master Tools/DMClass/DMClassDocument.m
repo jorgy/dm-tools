@@ -19,6 +19,18 @@
 #define kDMMonsterLabel @"Monster"
 #define kDMPreparedLabel @"Prepared"
 #define kDMSpontaneousLabel @"Spontaneous"
+#define kDMPrestigeLabel @"Prestige Class"
+
+
+
+@interface DMClassDocument ()
+{
+    NSMutableIndexSet *_selectedSkills;
+    NSArray *_skillNames;
+}
+
+@end
+
 
 
 @implementation DMClassDocument
@@ -42,8 +54,14 @@
         _name = [@"" retain];
         _hitDie = 4;
         _skillPoints = 2;
-        _classType = [@"Caster" retain];
-        _casterType = [@"Prepared" retain];
+        _classType = [kDMCasterLabel retain];
+        _casterType = [kDMPreparedLabel retain];
+        
+        _selectedSkills = [[NSMutableIndexSet alloc] init];
+        
+        NSBundle *mainBundle = [NSBundle mainBundle];
+        NSString *skillsPlistPath = [mainBundle pathForResource: @"ClassSkills" ofType: @"plist"];
+        _skillNames = [[NSArray alloc] initWithContentsOfFile: skillsPlistPath];
     }
     
     return self;
@@ -54,6 +72,16 @@
 {
     [_name release];
     [_classType release];
+    [_casterType release];
+    [_selectedSkills release];
+    [_skillNames release];
+    
+    [_nameLabel release];
+    [_hitDieSegment release];
+    [_skillPointsSegment release];
+    [_classTypeSegment release];
+    [_casterTypeLabel release];
+    [_casterTypeSegment release];
     
     [super dealloc];
 }
@@ -103,11 +131,8 @@
     
     _classType = classType;
     
-    NSInteger index = [[NSArray arrayWithObjects: @"Caster", @"Non-Caster", @"Monster", nil] indexOfObject: classType];
+    NSInteger index = [[NSArray arrayWithObjects: kDMCasterLabel, kDMNonCasterLabel, kDMMonsterLabel, nil] indexOfObject: classType];
     [_classTypeSegment setSelectedSegment: index];
-    
-    if (_casterTypeSegment == nil)
-        NSLog(@"Huh?");
     
     if (index == 0)
     {
@@ -131,7 +156,7 @@
     
     _casterType = casterType;
     
-    NSInteger index = [[NSArray arrayWithObjects: @"Prepared", @"Spontaneous", @"Prestige Class", nil] indexOfObject: casterType];
+    NSInteger index = [[NSArray arrayWithObjects: kDMPreparedLabel, kDMSpontaneousLabel, kDMPrestigeLabel, nil] indexOfObject: casterType];
     [_casterTypeSegment setSelectedSegment: index];
 }
 
@@ -170,6 +195,45 @@
 }
 
 
+#pragma mark - NSTableViewDataSource
+
+- (NSInteger) numberOfRowsInTableView: (NSTableView *) tableView
+{
+    return [_skillNames count];
+}
+
+
+- (id) tableView: (NSTableView *) tableView objectValueForTableColumn: (NSTableColumn *) tableColumn row: (NSInteger) row
+{
+    if ([[tableColumn identifier] isEqualToString: @"check"])
+    {
+        if ([_selectedSkills containsIndex: row])
+            return [NSNumber numberWithInt: NSOnState];
+        else
+            return [NSNumber numberWithInt: NSOffState];
+    }
+    else if ([[tableColumn identifier] isEqualToString: @"name"])
+    {
+        return [_skillNames objectAtIndex: row];
+    }
+    else
+    {
+        return nil;
+    }
+}
+
+
+#pragma mark - NSTableViewDelegate
+
+- (void) tableView: (NSTableView *) tableView setObjectValue: (id) object forTableColumn: (NSTableColumn *) tableColumn row: (NSInteger) row
+{
+    if ([_selectedSkills containsIndex: row])
+        [_selectedSkills removeIndex: row];
+    else
+        [_selectedSkills addIndex: row];
+}
+
+
 #pragma mark - NSDocument methods
 
 - (NSString *) windowNibName
@@ -188,7 +252,7 @@
     [_hitDieSegment setSelectedSegment: (_hitDie - 4) / 2];
     [_skillPointsSegment setSelectedSegment: (_skillPoints - 2) / 2];
     
-    NSInteger index = [[NSArray arrayWithObjects: @"Caster", @"Non-Caster", @"Monster", nil] indexOfObject: _classType];
+    NSInteger index = [[NSArray arrayWithObjects: kDMCasterLabel, kDMNonCasterLabel, kDMMonsterLabel, nil] indexOfObject: _classType];
     [_classTypeSegment setSelectedSegment: index];
     
     if (index == 0)
@@ -202,7 +266,7 @@
         [_casterTypeLabel setHidden: YES];
     }
     
-    index = [[NSArray arrayWithObjects: @"Prepared", @"Spontaneous", @"Prestige Class", nil] indexOfObject: _casterType];
+    index = [[NSArray arrayWithObjects: kDMPreparedLabel, kDMSpontaneousLabel, kDMPrestigeLabel, nil] indexOfObject: _casterType];
     [_casterTypeSegment setSelectedSegment: index];
 }
 
@@ -219,7 +283,7 @@
     [archiver encodeInteger: _skillPoints forKey: @"skillpoints"];
     [archiver encodeObject: _classType forKey: @"classtype"];
     
-    if ([_classType isEqualToString: @"Caster"])
+    if ([_classType isEqualToString: kDMCasterLabel])
         [archiver encodeObject: _casterType forKey: @"castertype"];
     else
         [archiver encodeObject: @"N/A" forKey: @"castertype"];
@@ -248,7 +312,7 @@
     [_casterType release];
     NSString *type = [unarchiver decodeObjectForKey: @"castertype"];
     if ([type isEqualToString: @"N/A"])
-        type = @"Prepared";
+        type = kDMPreparedLabel;
     _casterType = [type retain];
     
     [unarchiver finishDecoding];

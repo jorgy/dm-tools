@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>Appraise</string>
+	<string>Balance</string>
+	<string>Bluff</string>
+	<string>Climb</string>
+	<string>Concentration</string>
+	<string>Craft</string>
+	<string>Decipher Script</string>
+	<string>Diplomacy</string>
+	<string>Disable Device</string>
+	<string>Disguise</string>
+	<string>Escape Artist</string>
+	<string>Forgery</string>
+	<string>Gather Information</string>
+	<string>Handle Animal</string>
+	<string>Heal</string>
+	<string>Hide</string>
+	<string>Intimidate</string>
+	<string>Jump</string>
+	<string>Knowledge (arcana)</string>
+	<string>Knowledge (architecture and engineering)</string>
+	<string>Knowledge (dungeoneering)</string>
+	<string>Knowledge (geography)</string>
+	<string>Knowledge (history)</string>
+	<string>Knowledge (local)</string>
+	<string>Knowledge (nature)</string>
+	<string>Knowledge (nobility and royalty)</string>
+	<string>Knowledge (religion)</string>
+	<string>Knowledge (the planes)</string>
+	<string>Listen</string>
+	<string>Move Silently</string>
+	<string>Open Lock</string>
+	<string>Perform</string>
+	<string>Profession</string>
+	<string>Ride</string>
+	<string>Search</string>
+	<string>Sense Motive</string>
+	<string>Sleight of Hand</string>
+	<string>Speak Language</string>
+	<string>Spellcraft</string>
+	<string>Spot</string>
+	<string>Survival</string>
+	<string>Swim</string>
+	<string>Tumble</string>
+	<string>Use Magic Device</string>
+	<string>Use Rope</string>
+</array>
+</plist>
