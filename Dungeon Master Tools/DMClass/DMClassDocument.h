@@ -11,7 +11,7 @@
 typedef enum { DM_FAST = 0, DM_MEDIUM = 1, DM_SLOW = 2 } DMBaseAttackProgession;
 typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 
-@interface DMClassDocument : NSDocument <NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface DMClassDocument : NSDocument <NSTextFieldDelegate>
 {
     NSString *_name;
     NSUInteger _hitDie;
@@ -29,6 +29,7 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 /* UI properties for IB */
 @property (nonatomic, retain) IBOutlet NSTabView *tabView;
 @property (nonatomic, retain) IBOutlet NSTabViewItem *spellsTab;
+@property (nonatomic, retain) IBOutlet NSTabViewItem *spellsKnownTab;
 
 @property (nonatomic, retain) IBOutlet NSTextField *nameLabel;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *hitDieSegment;
@@ -36,6 +37,7 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *classTypeSegment;
 @property (nonatomic, retain) IBOutlet NSTextField *casterTypeLabel;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *casterTypeSegment;
+@property (nonatomic, retain) IBOutlet NSTextField *casterTypeInfoLabel;
 @property (nonatomic, retain) IBOutlet NSTableView *skillTable;
 
 @property (nonatomic, retain) IBOutlet NSTableView *levelUpChart;
@@ -45,9 +47,6 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *reflexSegment;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *willSegment;
 
-@property (nonatomic, retain) IBOutlet NSTableView *spellsPerDayTable;
-@property (nonatomic, retain) IBOutlet NSTableView *spellsKnownTable;
-
 
 /** Segmented control callback */
 - (IBAction) segmentedControlChanged: (NSSegmentedControl *) sender;
@@ -56,6 +55,6 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 - (IBAction) sliderChanged: (NSSlider *) sender;
 
 /** Spell table button handlers */
-- (IBAction) spellsPerDayButtonTapped: (NSTableView *) sender;
+- (IBAction) spellsPerDayButtonTapped: (id) sender;
 
 @end

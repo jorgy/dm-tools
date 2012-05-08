@@ -50,6 +50,7 @@
     /* UI elements */
     NSTabView *_tabView;
     NSTabViewItem *_spellsTab;
+    NSTabViewItem *_spellsKnownTab;
     
     NSTextField *_nameLabel;
     NSSegmentedControl *_hitDieSegment;
@@ -57,6 +58,7 @@
     NSSegmentedControl *_classTypeSegment;
     NSTextField *_casterTypeLabel;
     NSSegmentedControl *_casterTypeSegment;
+    NSTextField *_casterTypeInfoLabel;
     NSTableView *_skillTable;
     
     NSTableView *_levelUpChart;
@@ -65,9 +67,6 @@
     NSSegmentedControl *_fortitudeSegment;
     NSSegmentedControl *_reflexSegment;
     NSSegmentedControl *_willSegment;
-    
-    NSTableView *_spellsPerDayTable;
-    NSTableView *_spellsKnownTable;
 }
 
 @end
@@ -78,12 +77,14 @@
 
 @synthesize tabView = _tabView;
 @synthesize spellsTab = _spellsTab;
+@synthesize spellsKnownTab = _spellsKnownTab;
 @synthesize nameLabel = _nameLabel;
 @synthesize hitDieSegment = _hitDieSegment;
 @synthesize skillPointsSegment = _skillPointsSegment;
 @synthesize classTypeSegment = _classTypeSegment;
 @synthesize casterTypeLabel = _casterTypeLabel;
 @synthesize casterTypeSegment = _casterTypeSegment;
+@synthesize casterTypeInfoLabel = _casterTypeInfoLabel;
 @synthesize skillTable = _skillTable;
 @synthesize levelUpChart = _levelUpChart;
 @synthesize levelCapSlider = _levelCapSlider;
@@ -91,8 +92,6 @@
 @synthesize fortitudeSegment = _fortitudeSegment;
 @synthesize reflexSegment = _reflexSegment;
 @synthesize willSegment = _willSegment;
-@synthesize spellsPerDayTable = _spellsPerDayTable;
-@synthesize spellsKnownTable = _spellsKnownTable;
 
 
 #pragma mark - Memory lifecycle
@@ -136,6 +135,7 @@
     
     [_tabView release];
     [_spellsTab release];
+    [_spellsKnownTab release];
     
     [_nameLabel release];
     [_hitDieSegment release];
@@ -143,6 +143,7 @@
     [_classTypeSegment release];
     [_casterTypeLabel release];
     [_casterTypeSegment release];
+    [_casterTypeInfoLabel release];
     
     [_skillTable release];
     [_levelUpChart release];
@@ -150,9 +151,6 @@
     [_fortitudeSegment release];
     [_reflexSegment release];
     [_willSegment release];
-    
-    [_spellsPerDayTable release];
-    [_spellsKnownTable release];
     
     [super dealloc];
 }
@@ -209,21 +207,25 @@
     {
         [_casterTypeSegment setHidden: NO];
         [_casterTypeLabel setHidden: NO];
+        [_casterTypeInfoLabel setHidden: NO];
         
-        if ([_tabView numberOfTabViewItems] < 3)
-        {
+        if (![[_tabView tabViewItems] containsObject: _spellsTab])
             [_tabView addTabViewItem: _spellsTab];
-        }
+        
+        if (![[_tabView tabViewItems] containsObject: _spellsKnownTab] && [_casterType isEqualToString: kDMSpontaneousLabel])
+            [_tabView addTabViewItem: _spellsKnownTab];
     }
     else
     {
         [_casterTypeSegment setHidden: YES];
         [_casterTypeLabel setHidden: YES];
+        [_casterTypeInfoLabel setHidden: YES];
         
-        if ([_tabView numberOfTabViewItems] > 2)
-        {
+        if ([[_tabView tabViewItems] containsObject: _spellsTab])
             [_tabView removeTabViewItem: _spellsTab];
-        }
+        
+        if ([[_tabView tabViewItems] containsObject: _spellsKnownTab])
+            [_tabView removeTabViewItem: _spellsKnownTab];
     }
 }
 
@@ -239,6 +241,12 @@
     
     NSInteger index = [[NSArray arrayWithObjects: kDMPreparedLabel, kDMSpontaneousLabel, kDMPrestigeLabel, nil] indexOfObject: casterType];
     [_casterTypeSegment setSelectedSegment: index];
+    
+    if (![[_tabView tabViewItems] containsObject: _spellsKnownTab] && [_casterType isEqualToString: kDMSpontaneousLabel])
+        [_tabView addTabViewItem: _spellsKnownTab];
+    
+    if ([[_tabView tabViewItems] containsObject: _spellsKnownTab] && ![_casterType isEqualToString: kDMSpontaneousLabel])
+        [_tabView removeTabViewItem: _spellsKnownTab];
 }
 
 
@@ -371,9 +379,21 @@
 
 #pragma mark - Spell table button handlers
 
-- (void) spellsPerDayButtonTapped: (NSTableView *) sender
+- (void) spellsPerDayButtonTapped: (NSMatrix *) sender
 {
+    int newValue;
+    if ([[[sender selectedCell] title] isEqualToString: @"-"])
+        newValue = 0;
+    else
+        newValue = [[[sender selectedCell] title] intValue] + 1;
     
+    if (newValue > 9)
+        return;
+    
+    for (NSUInteger i = [sender selectedRow]; i < [sender numberOfRows]; i += 1)
+    {
+        [[sender cellAtRow: i column: [sender selectedColumn]] setTitle: [NSString stringWithFormat: @"%d", newValue]];
+    }
 }
 
 
@@ -392,10 +412,6 @@
     if (tableView == _skillTable)
         return [_skillNames count];
     else if (tableView == _levelUpChart)
-        return _levelCap;
-    else if (tableView == _spellsPerDayTable)
-        return _levelCap;
-    else if (tableView == _spellsKnownTable)
         return _levelCap;
     else
         return 0;
@@ -500,20 +516,6 @@
             return nil;
         }
     }
-    else if (tableView == _spellsPerDayTable)
-    {
-        if ([[tableColumn identifier] isEqualToString: @"level"])
-            return [NSNumber numberWithInt: row + 1];
-        
-        return @"-";
-    }
-    else if (tableView == _spellsKnownTable)
-    {
-        if ([[tableColumn identifier] isEqualToString: @"level"])
-            return [NSNumber numberWithInt: row + 1];
-        
-        return @"-";
-    }
     else
     {
         return nil;
@@ -558,11 +560,13 @@
     {
         [_casterTypeSegment setHidden: NO];
         [_casterTypeLabel setHidden: NO];
+        [_casterTypeInfoLabel setHidden: NO];
     }
     else
     {
         [_casterTypeSegment setHidden: YES];
         [_casterTypeLabel setHidden: YES];
+        [_casterTypeInfoLabel setHidden: YES];
         
         [_tabView removeTabViewItem: _spellsTab];
     }
@@ -575,6 +579,16 @@
     [_fortitudeSegment setSelectedSegment: _fortitudeProgression];
     [_reflexSegment setSelectedSegment: _reflexProgression];
     [_willSegment setSelectedSegment: _willProgression];
+    
+    if (![_classType isEqualToString: kDMCasterLabel])
+    {
+        [_tabView removeTabViewItem: _spellsTab];
+        [_tabView removeTabViewItem: _spellsKnownTab];
+    }
+    else if (![_casterType isEqualToString: kDMSpontaneousLabel])
+    {
+        [_tabView removeTabViewItem: _spellsKnownTab];
+    }
 }
 
 
