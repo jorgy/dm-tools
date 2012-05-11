@@ -28,17 +28,18 @@
 #define kDMPrestigeLabel    @"Prestige Class"
 
 /* Document keys */
-#define kDMClassNameKey   @"ClassName"
-#define kDMHitDieKey      @"HitDie"
-#define kDMSkillPointsKey @"SkillPoints"
-#define kDMClassTypeKey   @"ClassType"
-#define kDMCasterTypeKey  @"CasterType"
-#define kDMClassSkillsKey @"ClassSkills"
-#define kDMLevelCapKey    @"LevelCap"
-#define kDMBaseAttackKey  @"BaseAttack"
-#define kDMFortitudeKey   @"FortitudeSave"
-#define kDMReflexKey      @"ReflexSave"
-#define kDMWillKey        @"WillSave"
+#define kDMClassNameKey    @"ClassName"
+#define kDMHitDieKey       @"HitDie"
+#define kDMSkillPointsKey  @"SkillPoints"
+#define kDMClassTypeKey    @"ClassType"
+#define kDMCasterTypeKey   @"CasterType"
+#define kDMClassSkillsKey  @"ClassSkills"
+#define kDMLevelCapKey     @"LevelCap"
+#define kDMBaseAttackKey   @"BaseAttack"
+#define kDMFortitudeKey    @"FortitudeSave"
+#define kDMReflexKey       @"ReflexSave"
+#define kDMWillKey         @"WillSave"
+#define kDMSpellsPerDayKey @"SpellsPerDayTable"
 
 
 
@@ -67,6 +68,8 @@
     NSSegmentedControl *_fortitudeSegment;
     NSSegmentedControl *_reflexSegment;
     NSSegmentedControl *_willSegment;
+    
+    NSMatrix *_spellsPerDayMatrix;
 }
 
 @end
@@ -78,6 +81,7 @@
 @synthesize tabView = _tabView;
 @synthesize spellsTab = _spellsTab;
 @synthesize spellsKnownTab = _spellsKnownTab;
+
 @synthesize nameLabel = _nameLabel;
 @synthesize hitDieSegment = _hitDieSegment;
 @synthesize skillPointsSegment = _skillPointsSegment;
@@ -86,12 +90,15 @@
 @synthesize casterTypeSegment = _casterTypeSegment;
 @synthesize casterTypeInfoLabel = _casterTypeInfoLabel;
 @synthesize skillTable = _skillTable;
+
 @synthesize levelUpChart = _levelUpChart;
 @synthesize levelCapSlider = _levelCapSlider;
 @synthesize baseAttackSegment = _baseAttackSegment;
 @synthesize fortitudeSegment = _fortitudeSegment;
 @synthesize reflexSegment = _reflexSegment;
 @synthesize willSegment = _willSegment;
+
+@synthesize spellsPerDayMatrix = _spellsPerDayMatrix;
 
 
 #pragma mark - Memory lifecycle
@@ -116,6 +123,15 @@
         _reflexProgression = DM_GOOD;
         _willProgression = DM_GOOD;
         
+        _spellsPerDay = [[NSMutableArray alloc] initWithCapacity: 20];
+        for (NSUInteger i = 0; i < 20; i += 1)
+        {
+            NSMutableArray *row = [[NSMutableArray alloc] initWithCapacity: 10];
+            for (NSUInteger j = 0; j < 10; j += 1)
+                [row addObject: @"-"];
+            [_spellsPerDay addObject: row];
+        }
+        
         NSBundle *mainBundle = [NSBundle mainBundle];
         NSString *skillsPlistPath = [mainBundle pathForResource: @"ClassSkills" ofType: @"plist"];
         _skillNames = [[NSArray alloc] initWithContentsOfFile: skillsPlistPath];
@@ -132,6 +148,7 @@
     [_casterType release];
     [_selectedSkills release];
     [_skillNames release];
+    [_spellsPerDay release];
     
     [_tabView release];
     [_spellsTab release];
@@ -151,6 +168,8 @@
     [_fortitudeSegment release];
     [_reflexSegment release];
     [_willSegment release];
+    
+    [_spellsPerDayMatrix release];
     
     [super dealloc];
 }
@@ -327,6 +346,32 @@
 }
 
 
+- (void) setNumberOfSpellsPerDay: (NSInteger) numberOfSpells
+                      spellLevel: (NSUInteger) spellLevel
+                  characterLevel: (NSUInteger) characterLevel
+{
+    NSString *currentTitle = [[_spellsPerDayMatrix cellAtRow: characterLevel column: spellLevel] title];
+    NSInteger currentValue;
+    if ([currentTitle isEqualToString: @"-"])
+        currentValue = -1;
+    else
+        currentValue = [currentTitle integerValue];
+    [[[self undoManager] prepareWithInvocationTarget: self] setNumberOfSpellsPerDay: currentValue spellLevel: spellLevel characterLevel: characterLevel];
+    
+    NSString *title;
+    if (numberOfSpells < 0)
+        title = @"-";
+    else
+        title = [NSString stringWithFormat: @"%d", numberOfSpells];
+    
+    for (NSUInteger i = characterLevel; i < [_spellsPerDayMatrix numberOfRows]; i += 1)
+    {
+        [[_spellsPerDayMatrix cellAtRow: i column: spellLevel] setTitle: title];
+        [[_spellsPerDay objectAtIndex: i - 1] replaceObjectAtIndex: spellLevel - 1 withObject: title];
+    }
+}
+
+
 #pragma mark - Segmented control handler
 
 - (void) segmentedControlChanged: (NSSegmentedControl *) sender
@@ -389,11 +434,15 @@
     
     if (newValue > 9)
         return;
-    
-    for (NSUInteger i = [sender selectedRow]; i < [sender numberOfRows]; i += 1)
-    {
-        [[sender cellAtRow: i column: [sender selectedColumn]] setTitle: [NSString stringWithFormat: @"%d", newValue]];
-    }
+
+    [self setNumberOfSpellsPerDay: newValue spellLevel: [sender selectedColumn] characterLevel: [sender selectedRow]];
+}
+
+
+- (void) resetSpellsPerDay: (NSButton *) sender
+{
+    for (NSUInteger col = 1; col < [_spellsPerDayMatrix numberOfColumns]; col += 1)
+        [self setNumberOfSpellsPerDay: -1 spellLevel: col characterLevel: 1];
 }
 
 
@@ -589,6 +638,15 @@
     {
         [_tabView removeTabViewItem: _spellsKnownTab];
     }
+    
+    for (NSUInteger i = 1; i <= 20; i += 1)
+    {
+        for (NSUInteger j = 1; j <= 10; j += 1)
+        {
+            NSString *title = [[_spellsPerDay objectAtIndex: i - 1] objectAtIndex: j - 1];
+            [[_spellsPerDayMatrix cellAtRow: i column: j] setTitle: title];
+        }
+    }
 }
 
 
@@ -623,6 +681,16 @@
     [archiver encodeInt: _fortitudeProgression forKey: kDMFortitudeKey];
     [archiver encodeInt: _reflexProgression forKey: kDMReflexKey];
     [archiver encodeInt: _willProgression forKey: kDMWillKey];
+    
+    /* Spell tables */
+    if ([_classType isEqualToString: kDMCasterLabel])
+    {
+        /* Spells per day */
+        if (![_casterType isEqualToString: kDMPrestigeLabel])
+        {
+            [archiver encodeObject: _spellsPerDay forKey: kDMSpellsPerDayKey];
+        }
+    }
     
     [archiver finishEncoding];
     [archiver release];
@@ -660,6 +728,8 @@
     _fortitudeProgression = [unarchiver decodeIntForKey: kDMFortitudeKey];
     _reflexProgression = [unarchiver decodeIntForKey: kDMReflexKey];
     _willProgression = [unarchiver decodeIntForKey: kDMWillKey];
+    
+    _spellsPerDay = [[unarchiver decodeObjectForKey: kDMSpellsPerDayKey] retain];
     
     [unarchiver finishDecoding];
     [unarchiver release];

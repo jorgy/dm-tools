@@ -24,6 +24,8 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
     DMSaveProgression _fortitudeProgression;
     DMSaveProgression _reflexProgression;
     DMSaveProgression _willProgression;
+    
+    NSMutableArray *_spellsPerDay;
 }
 
 /* UI properties for IB */
@@ -47,6 +49,8 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *reflexSegment;
 @property (nonatomic, retain) IBOutlet NSSegmentedControl *willSegment;
 
+@property (nonatomic, retain) IBOutlet NSMatrix *spellsPerDayMatrix;
+
 
 /** Segmented control callback */
 - (IBAction) segmentedControlChanged: (NSSegmentedControl *) sender;
@@ -55,6 +59,7 @@ typedef enum { DM_GOOD = 0, DM_BAD = 1 } DMSaveProgression;
 - (IBAction) sliderChanged: (NSSlider *) sender;
 
 /** Spell table button handlers */
-- (IBAction) spellsPerDayButtonTapped: (id) sender;
+- (IBAction) spellsPerDayButtonTapped: (NSMatrix *) sender;
+- (IBAction) resetSpellsPerDay: (NSButton *) sender;
 
 @end
